@@ -1,0 +1,61 @@
+<html>
+<body>
+hello2
+<script type='text/javascript'>
+    function initEmbeddedMessaging() {
+        try {
+            embeddedservice_bootstrap.settings.language = 'en_US'; // Set language
+
+            embeddedservice_bootstrap.init(
+                '00D7Z00000053zg', // Org ID
+                'MIAW_for_Bot_on_Git',
+                'https://hsecovax--dev31.sandbox.my.site.com/ESWMIAWforBotonGit1707755430647',
+                {
+                    scrt2URL: 'https://hsecovax--dev31.sandbox.my.salesforce-scrt.com'
+                }
+            );
+        } catch (err) {
+            console.error('Error loading Embedded Messaging: ', err);
+        }
+    };
+</script>
+<script type='text/javascript' src='https://hsecovax--dev31.sandbox.my.site.com/ESWMIAWforBotonGit1707755430647/assets/js/bootstrap.min.js' onload='initEmbeddedMessaging()'></script>
+
+<script>
+    var prefix;
+    
+    var verifyCallback = function(token) {
+        var message = prefix + 'success';
+        window.parent.document.dispatchEvent(new CustomEvent('grecaptchaVerified', { detail: { response: token, message: message } }));
+    };
+    
+    var expireCallback = function() {
+        var message = prefix + 'expire';
+        window.parent.document.dispatchEvent(new CustomEvent('grecaptchaExpired', { detail: { message: message } }));
+    };
+      
+    var errorCallback = function() {
+        var message = prefix + 'error';
+        window.parent.document.dispatchEvent(new CustomEvent('grecaptchaError', { detail: { message: message } }));
+    };
+    
+    window.parent.document.addEventListener('grecaptchaRender', function(e) {
+        prefix = e.detail.prefix || ''; // Ensure prefix is defined
+        console.log('--here-from bot code---');
+
+        window.parent.grecaptcha.render(e.detail.element, {
+            'sitekey': '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI',
+            'callback': verifyCallback,
+            'expired-callback': expireCallback,
+            'error-callback': errorCallback
+        });   
+    });
+
+    document.addEventListener('grecaptchaReset', function() {
+        grecaptcha.reset();
+    }); 
+</script>
+<script src='https://www.google.com/recaptcha/api.js?render=explicit' async defer></script>
+
+</body>
+</html>
